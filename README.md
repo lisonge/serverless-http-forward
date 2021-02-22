@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-23 01:12:34
+ * @LastEditTime: 2021-02-23 01:26:33
 -->
 
 # serverless-http-forward
@@ -13,9 +13,9 @@
 
 当 访问 <https://i.songe.li> 时
 
-会调用 阿里云的HTTP函数 转发 此HTTP请求
+会调用 阿里云的HTTP函数(香港地区) 转发 此HTTP请求
 
-到 内地服务器的 <http://47.103.215.184:8888>，然后转发回复
+到 (上海地区)服务器的 <http://47.103.215.184:8888>，然后转发回复
 
 以 较低廉/零 的价格实现 无备案域名解析到 内地服务器
 
