@@ -2,7 +2,7 @@
  * @Date: 2021-02-21 19:52:00
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-21 20:20:39
+ * @LastEditTime: 2021-02-22 22:15:07
  */
 
 import stream from 'stream';
@@ -29,7 +29,7 @@ export interface AliyunRequest extends internal.Readable {
   queries: { [key: string]: string };
   url: string;
   clientIP: string;
-  method: 'GET' | 'POST';
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH';
 }
 
 export interface AliyunResponse {
