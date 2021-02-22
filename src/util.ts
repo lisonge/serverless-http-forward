@@ -2,7 +2,7 @@
  * @Date: 2021-02-21 20:23:34
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-22 20:39:48
+ * @LastEditTime: 2021-02-23 00:33:27
  */
 import { AliyunRequest, AliyunResponse } from './@types/aliyun';
 import { Request, Response, Headers } from 'node-fetch';
@@ -10,7 +10,6 @@ import getRawBody from 'raw-body';
 import { URL } from 'url';
 import { config } from './config';
 import { join } from 'path';
-
 
 export async function aliyunReq2nodeReq(
   aliyunReq: AliyunRequest
@@ -22,10 +21,14 @@ export async function aliyunReq2nodeReq(
     url.searchParams.set(k, queries[k]);
   }
   let body: Buffer | undefined = undefined;
-  if (method == 'POST') {
+  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
     body = await getRawBody(aliyunReq);
   }
-  const req = new Request(url, { headers: new Headers(headers), method, body });
+  const h = new Headers(headers);
+  ['host'].forEach((v) => {
+    h.delete(v);
+  });
+  const req = new Request(url, { headers: h, method, body });
   return req;
 }
 
@@ -33,8 +36,19 @@ export async function nodeResp2aliyunResp(
   resp: Response,
   aliyunResp: AliyunResponse
 ) {
-  resp.headers.forEach((value, name) => {
-    aliyunResp.setHeader(value, name);
+  const headers = new Headers(resp.headers);
+  [
+    'connection',
+    'content-encoding',
+    'content-length',
+    'date',
+    'keep-alive',
+    'transfer-encoding',
+  ].forEach((v) => {
+    headers.delete(v);
+  });
+  headers.forEach((value, name) => {
+    aliyunResp.setHeader(name, value);
   });
   aliyunResp.setStatusCode(resp.status);
   aliyunResp.send(await resp.buffer());
