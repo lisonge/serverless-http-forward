@@ -2,12 +2,33 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-23 01:26:33
+ * @LastEditTime: 2021-02-23 18:45:05
 -->
 
 # serverless-http-forward
 
 阿里云 函数计算 HTTP 转发
+
+## 说明
+
+转发 HTTP 请求
+
+### 不会转发的 HTTP Request Header 字段
+
+- host
+
+### 不会转发的 HTTP Response Header 字段
+
+- connection
+- content-encoding
+- content-length
+- date
+- keep-alive
+- transfer-encoding
+
+### 使用
+
+更改 `/config.toml` 中的 `forward_url` 为要转发的 HTTP URL
 
 ## 用途
 
