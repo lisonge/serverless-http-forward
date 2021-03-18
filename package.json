@@ -4,7 +4,8 @@
   "description": "serverless-http-forward",
   "main": "index.js",
   "scripts": {
-    "compile": "npx webpack --progress --color"
+    "compile": "webpack --progress --mode=production",
+    "compile:dev": "webpack --progress --mode=development"
   },
   "repository": {
     "type": "git",
