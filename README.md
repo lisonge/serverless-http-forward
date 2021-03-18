@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-23 18:45:05
+ * @LastEditTime: 2021-03-18 12:57:19
 -->
 
 # serverless-http-forward
@@ -28,7 +28,7 @@
 
 ### 使用
 
-更改 `/config.toml` 中的 `forward_url` 为要转发的 HTTP URL
+更改 [config.toml](./config.toml) 中的 `forward_url` 为要转发的 HTTP URL
 
 ## 用途
 
