@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-18 12:57:19
+ * @LastEditTime: 2021-03-18 14:48:01
 -->
 
 # serverless-http-forward
@@ -27,6 +27,10 @@
 - transfer-encoding
 
 ### 使用
+
+```shell
+git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
+```
 
 更改 [config.toml](./config.toml) 中的 `forward_url` 为要转发的 HTTP URL
 
