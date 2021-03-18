@@ -16,8 +16,23 @@ class PayLoad<T extends ReqResp> {
   }
 }
 
-export class Next<T extends ReqResp> extends PayLoad<T> {}
-export class End<T extends ReqResp> extends PayLoad<T> {}
+// function from<S extends typeof PayLoad, T extends ReqResp>(
+//   _class: S,
+//   value: T
+// ) {
+//   return new _class(value);
+// }
+
+export class Next<T extends ReqResp> extends PayLoad<T> {
+  static from<T extends ReqResp>(value: T) {
+    return new this(value);
+  }
+}
+export class End<T extends ReqResp> extends PayLoad<T> {
+  static from<T extends ReqResp>(value: T) {
+    return new this(value);
+  }
+}
 
 export interface BeforeForwardFunc {
   (latestReq: Request, oldestReq: Request): IPromise<
@@ -33,4 +48,3 @@ export interface AfterForwardFunc {
     oldestReq: Request
   ): IPromise<Next<Response> | End<Response> | void>;
 }
-
