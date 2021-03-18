@@ -2,14 +2,14 @@
  * @Date: 2021-02-21 19:52:00
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-22 22:15:07
+ * @LastEditTime: 2021-03-18 12:49:27
  */
 
 import stream from 'stream';
 import internal from 'stream';
 
 /**
- * https://help.aliyun.com/document_detail/156876.html
+ * @see <https://help.aliyun.com/document_detail/156876.html>
  */
 export interface AliyunContext {
   requestId: string;
@@ -19,9 +19,21 @@ export interface AliyunContext {
   region: string;
   accountId: string;
 }
+interface Credentials {
+  accessKeyId: string;
+  accessKeySecret: string;
+  securityToken: string;
+}
+interface Service {
+  name: string;
+  logProject: string;
+  logStore: string;
+  qualifier: string;
+  versionId: string;
+}
 
 /**
- * https://help.aliyun.com/document_detail/74757.html
+ * @see <https://help.aliyun.com/document_detail/74757.html>
  */
 export interface AliyunRequest extends internal.Readable {
   headers: { [key: string]: string };
@@ -44,7 +56,7 @@ interface HandledInvocationError extends Error {
 }
 
 /**
- * https://help.aliyun.com/document_detail/156876.html
+ * @see <https://help.aliyun.com/document_detail/156876.html>
  */
 export interface AliyunCallback {
   (error: null, data: Buffer): Buffer;
