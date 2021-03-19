@@ -2,13 +2,13 @@
  * @Date: 2021-02-21 20:23:34
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-02-23 00:33:27
+ * @LastEditTime: 2021-03-18 15:39:09
  */
-import { AliyunRequest, AliyunResponse } from './@types/aliyun';
+import { AliyunRequest, AliyunResponse } from '../@types/aliyun';
 import { Request, Response, Headers } from 'node-fetch';
 import getRawBody from 'raw-body';
 import { URL } from 'url';
-import { config } from './config';
+import { config } from '../config';
 import { join } from 'path';
 
 export async function aliyunReq2nodeReq(

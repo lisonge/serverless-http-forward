@@ -1,50 +1,52 @@
 /*
- * @Date: 2021-03-05 14:23:03
- * @lastEditors: lisonge
+ * @Date: 2021-03-18 15:48:07
+ * @LastEditors: lisonge
  * @Author: lisonge
- * @lastEditTime: 2021-03-05 18:08:10
+ * @LastEditTime: 2021-03-19 18:12:11
  */
-import { Request, Response } from 'node-fetch';
 
-type ReqResp = Response | Request;
-type IPromise<T> = T | Promise<T>;
+import {
+  AfterForwardFunc,
+  BeforeForwardFunc,
+  End,
+  Next,
+} from './core/middleware';
+import { config } from './config';
+import { URL } from 'url';
+import { BaseError } from './core/error';
+import { Response } from 'node-fetch';
 
-class PayLoad<T extends ReqResp> {
-  readonly value: T;
-  constructor(value: T) {
-    this.value = value;
+export const corsAfterFunc: AfterForwardFunc = (latestResp) => {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Access-Control-Allow-Headers': '*',
+  } as { [key: string]: string };
+  for (const key in headers) {
+    latestResp.headers.set(key, headers[key]);
   }
-}
-
-// function from<S extends typeof PayLoad, T extends ReqResp>(
-//   _class: S,
-//   value: T
-// ) {
-//   return new _class(value);
-// }
-
-export class Next<T extends ReqResp> extends PayLoad<T> {
-  static from<T extends ReqResp>(value: T) {
-    return new this(value);
+  return Next.from(latestResp);
+};
+export const routeFilterFunc: BeforeForwardFunc = (latestResp, _) => {
+  const u = new URL(latestResp.url);
+  if (
+    config.allow_route_list.length > 0 &&
+    !config.allow_route_list.some((v) => RegExp(v).test(u.pathname))
+  ) {
+    throw BaseError.from(403, 'block invalid path');
   }
-}
-export class End<T extends ReqResp> extends PayLoad<T> {
-  static from<T extends ReqResp>(value: T) {
-    return new this(value);
+};
+
+export const corsBeforFunc: BeforeForwardFunc = (latestReq) => {
+  if (latestReq.method === 'OPTIONS') {
+    return End.from(
+      new Response(undefined, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+    );
   }
-}
-
-export interface BeforeForwardFunc {
-  (latestReq: Request, oldestReq: Request): IPromise<
-    Next<Request> | End<ReqResp> | void
-  >;
-}
-
-export interface AfterForwardFunc {
-  (
-    latestResp: Response,
-    oldestResp: Response,
-    latestReq: Request,
-    oldestReq: Request
-  ): IPromise<Next<Response> | End<Response> | void>;
-}
+};

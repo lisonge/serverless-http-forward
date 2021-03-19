@@ -2,15 +2,22 @@
  * @Date: 2021-02-22 19:30:45
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-18 12:50:21
+ * @LastEditTime: 2021-03-19 18:13:04
  */
 // exnext
 import 'core-js';
 // exnext
-import { aliyunReq2nodeReq, nodeResp2aliyunResp } from './util';
+import { aliyunReq2nodeReq, nodeResp2aliyunResp } from './core/util';
 import { AliyunContext, AliyunRequest, AliyunResponse } from './@types/aliyun';
-import { BeforeForwardFunc, AfterForwardFunc, End, Next } from './interceptor';
+import {
+  BeforeForwardFunc,
+  AfterForwardFunc,
+  End,
+  Next,
+} from './core/middleware';
 import fetch, { Request } from 'node-fetch';
+import { BaseError } from './core/error';
+import { corsAfterFunc, routeFilterFunc, corsBeforFunc } from './interceptor';
 
 export const handler = async (
   aliyunReq: AliyunRequest,
@@ -21,7 +28,10 @@ export const handler = async (
     const oldestReq = await aliyunReq2nodeReq(aliyunReq);
     let latestReq = oldestReq.clone();
     {
-      const beforeFuncList: BeforeForwardFunc[] = [];
+      const beforeFuncList: BeforeForwardFunc[] = [
+        routeFilterFunc,
+        corsBeforFunc,
+      ];
       for (const beforeFunc of beforeFuncList) {
         const result = await beforeFunc(latestReq, oldestReq.clone());
         if (result instanceof Next) {
@@ -42,7 +52,7 @@ export const handler = async (
     const oldestResp = await fetch(latestReq);
     let latestResp = oldestResp.clone();
     {
-      const afterFuncList: AfterForwardFunc[] = [];
+      const afterFuncList: AfterForwardFunc[] = [corsAfterFunc];
       for (const afterFunc of afterFuncList) {
         const result = await afterFunc(
           latestResp,
@@ -64,11 +74,24 @@ export const handler = async (
 
     nodeResp2aliyunResp(latestResp, aliyunResp);
   } catch (error) {
-    aliyunResp.setHeader('Content-Type', 'application/json; charset=utf-8');
     aliyunResp.setStatusCode(500);
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
+    } as { [key: string]: string };
+    for (const key in headers) {
+      aliyunResp.setHeader(key, headers[key]);
+    }
+    aliyunResp.setHeader('Content-Type', 'application/json; charset=utf-8');
     if (error instanceof Error) {
-      const { message, stack, name } = error;
-      aliyunResp.send(JSON.stringify({ message, name, stack }, undefined, 2));
+      if (error instanceof BaseError) {
+        aliyunResp.setStatusCode(error.status);
+        aliyunResp.send(error.stringify());
+      } else {
+        const { message, stack, name } = error;
+        aliyunResp.send(JSON.stringify({ message, name, stack }, undefined, 2));
+      }
     } else {
       aliyunResp.send(
         JSON.stringify({ message: 'unknown error', error }, undefined, 2)
