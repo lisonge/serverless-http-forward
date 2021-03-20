@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-21 00:22:10
+ * @LastEditTime: 2021-03-21 00:25:40
 -->
 
 # serverless-http-forward
@@ -61,4 +61,4 @@ git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
 
 - HTTP header 里 Set-Cookie 在单纯转发下将会出现问题
 
-- 是HTTP代理，不是TCP代理，所以不支持 Websocket
+- 是HTTP转发，不是TCP代理，所以不支持 Websocket
