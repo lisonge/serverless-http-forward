@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-21 00:25:40
+ * @LastEditTime: 2021-04-02 11:27:08
 -->
 
 # serverless-http-forward
@@ -11,7 +11,9 @@
 
 ## 说明
 
-转发 HTTP 请求
+- 转发 HTTP 请求
+
+- 链式调用的拦截器，允许跨域，路由权限控制等
 
 ### 不会转发的 HTTP Request Header 字段
 
