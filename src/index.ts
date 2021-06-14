@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:30:45
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-06-14 14:53:42
+ * @LastEditTime: 2021-06-14 15:20:22
  */
 import 'source-map-support/register';
 // exnext
@@ -23,7 +23,7 @@ import { corsAfterFunc, routeFilterFunc, corsBeforFunc } from './interceptor';
 export const handler = async (
   aliyunReq: AliyunRequest,
   aliyunResp: AliyunResponse,
-  aliyuncontext: AliyunContext
+  aliyunCtx: AliyunContext
 ) => {
   try {
     const oldestReq = await aliyunReq2nodeReq(aliyunReq);
