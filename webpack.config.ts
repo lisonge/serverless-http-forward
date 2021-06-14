@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:32:17
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-17 20:54:45
+ * @LastEditTime: 2021-06-14 14:50:27
  */
 import path from 'path';
 import { Configuration } from 'webpack';
@@ -17,8 +17,11 @@ export default {
     rules: [
       {
         test: /\.ts$/,
-        use: ['ts-loader'],
-        exclude: /node_modules/,
+        loader: 'esbuild-loader',
+        options: {
+          loader: 'ts',
+        },
+        // exclude: /node_modules/,
       },
     ],
   },
