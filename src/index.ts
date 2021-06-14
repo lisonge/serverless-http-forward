@@ -2,8 +2,9 @@
  * @Date: 2021-02-22 19:30:45
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-19 18:13:04
+ * @LastEditTime: 2021-06-14 14:53:42
  */
+import 'source-map-support/register';
 // exnext
 import 'core-js';
 // exnext
