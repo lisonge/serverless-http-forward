@@ -2,7 +2,7 @@
  * @Date: 2021-02-22 19:36:04
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-04-02 11:27:08
+ * @LastEditTime: 2021-08-19 15:51:30
 -->
 
 # serverless-http-forward
@@ -40,7 +40,7 @@ git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
 
 当 访问 <https://i.songe.li> 时
 
-会调用 阿里云的HTTP函数(香港地区) 转发 此HTTP请求
+会调用 阿里云的 HTTP 函数(香港地区) 转发 此 HTTP 请求
 
 到 (上海地区)服务器的 <http://47.103.215.184:8888>，然后转发回复
 
@@ -63,4 +63,4 @@ git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
 
 - HTTP header 里 Set-Cookie 在单纯转发下将会出现问题
 
-- 是HTTP转发，不是TCP代理，所以不支持 Websocket
+- 是 HTTP 转发，不是 TCP 代理，所以不支持 Websocket

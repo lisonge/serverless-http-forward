@@ -1,42 +1,37 @@
 {
-  "name": "serverless-http-forward",
-  "version": "1.0.0",
-  "description": "serverless-http-forward",
-  "main": "index.js",
-  "scripts": {
-    "compile": "webpack --progress --mode=production",
-    "compile:dev": "webpack --progress --mode=development"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lisonge/serverless-http-forward.git"
-  },
-  "keywords": [
-    "serverless"
-  ],
-  "author": "lisonge",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lisonge/serverless-http-forward/issues"
-  },
-  "homepage": "https://github.com/lisonge/serverless-http-forward#readme",
-  "devDependencies": {
-    "@types/node": "^14.14.31",
-    "@types/node-fetch": "^2.5.8",
-    "@types/source-map-support": "^0.5.3",
-    "@types/webpack": "^4.41.26",
-    "clean-webpack-plugin": "^3.0.0",
-    "esbuild-loader": "^2.13.1",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.5",
-    "webpack": "^5.23.0",
-    "webpack-cli": "^4.5.0"
-  },
-  "dependencies": {
-    "@iarna/toml": "^2.2.5",
-    "core-js": "^3.9.0",
-    "node-fetch": "^2.6.1",
-    "raw-body": "^2.4.1",
-    "source-map-support": "^0.5.19"
-  }
+    "name": "serverless-http-forward",
+    "version": "2.0.0",
+    "description": "serverless-http-forward",
+    "main": "index.js",
+    "scripts": {
+        "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=node --sourcemap --target=node12 --minify && tsc --emitDeclarationOnly --outDir dist"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lisonge/serverless-http-forward.git"
+    },
+    "keywords": [
+        "serverless"
+    ],
+    "author": "lisonge",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lisonge/serverless-http-forward/issues"
+    },
+    "homepage": "https://github.com/lisonge/serverless-http-forward#readme",
+    "devDependencies": {
+        "@types/core-js": "^2.5.5",
+        "@types/node": "^14.17.9",
+        "@types/node-fetch": "^2.5.12",
+        "@types/source-map-support": "^0.5.4",
+        "esbuild": "^0.12.21",
+        "typescript": "^4.3.5"
+    },
+    "dependencies": {
+        "@iarna/toml": "^2.2.5",
+        "core-js": "^3.16.2",
+        "node-fetch": "^2.6.1",
+        "raw-body": "^2.4.1",
+        "source-map-support": "^0.5.19"
+    }
 }
