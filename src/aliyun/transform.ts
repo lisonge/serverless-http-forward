@@ -21,9 +21,11 @@ export async function aliyunReq2nodeReq(
     useRealPath = false
 ): Promise<Request> {
     const { path, headers, method, queries } = aliyunReq;
-    const url = new URL(
-        `${headers['x-forwarded-proto']}://${headers['host']}${aliyunReq.url}`
-    );
+    const url = new URL(`http://127.0.0.1/`);
+    url.protocol = headers['x-forwarded-proto'];
+    url.host = headers['host'];
+    url.pathname = aliyunReq.url;
+    // `${}://${headers['host']}${aliyunReq.url}`
     for (const k in queries) {
         url.searchParams.set(k, queries[k]);
     }
