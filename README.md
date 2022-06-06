@@ -32,9 +32,18 @@
 
 ```shell
 git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
+cd serverless-http-forward
+pnpm i
+pnpm run build
 ```
 
 更改 [config.toml](./config.toml) 中的 `forward_url` 为要转发的 HTTP URL
+
+然后把除了 .git 和 node_modules 的所有文件压缩成一个 any_name.zip
+
+然后在 函数计算 香港地区 新建一个 node14 HTTP函数，配置函数入口 index.aliyunHandler
+
+上传刚刚的压缩包即可部署，后续可以绑定自定义域名
 
 ## 用途
 
@@ -45,6 +54,8 @@ git clone --depth=1 https://github.com/lisonge/serverless-http-forward.git
 到 (上海地区)服务器的 <http://47.103.215.184:8888>，然后转发回复
 
 以 较低廉/零 的价格实现 无备案域名解析到 内地服务器
+
+或者部署在 香港地区 转发海外api, 算是一种轻量级的翻墙方式
 
 ## 延迟
 
