@@ -15,6 +15,8 @@ export const aliyunHandler = async (
     aliyunCtx: AliyunContext
 ) => {
     let req = await aliyunReq2nodeReq(aliyunReq);
+    console.log('raw_req', req.url);
     const resp = await handler(req);
+    console.log('resp.status', resp.status);
     nodeResp2aliyunResp(resp, aliyunResp);
 };

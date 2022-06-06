@@ -12,21 +12,38 @@ import { End, Next } from './middleware';
 
 export const handler = async (req: Request): Promise<Response> => {
     try {
+        console.log(
+            'beforeFuncList',
+            beforeFuncList.map((f) => f.name).toString()
+        );
         for (const beforeFunc of beforeFuncList) {
             const result = await beforeFunc(req);
             if (result instanceof Next) {
                 req = result.value;
+                console.log('next', req.url);
             } else if (result instanceof End) {
                 const { value } = result;
                 if (value instanceof Request) {
                     req = value;
+                    console.log('end.req', req.url);
                     break;
                 } else {
+                    console.log('end.resp', value.status);
                     return value;
                 }
+            } else {
+                console.log('void', beforeFunc.name);
             }
         }
+
+        console.log('fetch req.url', req.url);
         let resp = await fetch(req);
+        console.log('fetch resp.status', resp.status);
+
+        console.log(
+            'afterFuncList',
+            afterFuncList.map((f) => f.name).toString()
+        );
         for (const afterFunc of afterFuncList) {
             const result = await afterFunc(resp, req);
             if (result !== undefined) {
